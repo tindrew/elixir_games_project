@@ -12,13 +12,7 @@ defmodule Games.WordleTest do
   end
 
   test "feedback/2 all yellow" do
-    assert Games.Wordle.feedback("ababa", "babab") == [
-             :yellow,
-             :yellow,
-             :yellow,
-             :yellow,
-             :yellow
-           ]
+    assert Games.Wordle.feedback("abcde", "edabc") == [:yellow, :yellow, :yellow, :yellow,:yellow]
   end
 
   test "feedback/2 mixed green and gray" do

@@ -1,5 +1,6 @@
 defmodule Games.Wordle do
-  def feedback(answer, guess) do
+  @spec feedback(binary) :: list
+  def feedback(answer) do
     # Input: two strings
     # Transformations:
     ## Turn both strings to a list characters 1st step
@@ -12,7 +13,10 @@ defmodule Games.Wordle do
     # OUtput: a list of 5 atoms consisting of :green, :yellow, :gray
 
     answer_letters = String.split(answer, "", trim: true)
-    guess_letters = String.split(guess, "", trim: true)
+    player_guess = IO.gets("please enter your guess: " )
+    |> String.trim()
+    |> String.split("", trim: true)
+
 
     IO.inspect(binding())
 
@@ -25,18 +29,19 @@ defmodule Games.Wordle do
 
     Enum.map(0..4, fn index ->
       cond do
-        Enum.at(guess_letters, index) not in answer_letters ->
+        Enum.at(player_guess, index) not in answer_letters ->
           :gray
 
-        Enum.at(guess_letters, index) == Enum.at(answer_letters, index) ->
+        Enum.at(player_guess, index) == Enum.at(answer_letters, index) ->
           :green
 
-        # Enum.at(guess_letters, index) in answer_letters and
-        #     Enum.at(guess_letters, index) == Enum.at(answer_letters, index) ->
-        #   :gray
-
-        Enum.at(guess_letters, index) != Enum.at(answer_letters, index) ->
+        Enum.at(player_guess, index) != Enum.at(answer_letters, index) ->
           :yellow
+
+        Enum.at(player_guess, index) in answer_letters and
+        Enum.at(player_guess, index) == Enum.at(answer_letters, index) ->
+        :gray
+
       end
     end)
   end
